@@ -1,23 +1,19 @@
+// Packages
 import { FC } from 'react';
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { SafeAreaView, StyleSheet } from 'react-native';
+// Screens
+import HomeScreen from './src/screens/HomeScreen';
 
-const App: FC = () => {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-
-      <StatusBar style="auto" />
-    </View>
-  );
-};
+const App: FC = () => (
+  <SafeAreaView style={styles.container}>
+    <HomeScreen />
+  </SafeAreaView>
+);
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: '#F5F5F5',
   },
 });
 
