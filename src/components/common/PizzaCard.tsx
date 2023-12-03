@@ -1,12 +1,13 @@
 // Packages
 import { FC, memo } from 'react';
 import { View, StyleSheet, Image, Text } from 'react-native';
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
+// Components
+import CustomTouchable from '../ui/CustomTouchable';
+// Theme
+import { colors } from '../../theme/palette';
 // Types
-import { IPizza } from '../types/pizza';
-// Assets
-import cart from '../../assets/cart.png';
-import heartFilled from '../../assets/cards-heart-filled.png';
-import heartOutlined from '../../assets/cards-heart-outlined.png';
+import { IPizza } from '../../types/pizza';
 
 interface Props {
   pizza: IPizza;
@@ -34,12 +35,21 @@ const PizzaCard: FC<Props> = memo(({ pizza }) => {
         <View style={styles.headerContainer}>
           <Text style={styles.title}>{title}</Text>
 
-          <View style={styles.favoriteBtn}>
-            <Image
-              source={isFavorite ? heartFilled : heartOutlined}
-              style={styles.image}
-            />
-          </View>
+          <CustomTouchable>
+            {isFavorite ? (
+              <MaterialCommunityIcons
+                size={20}
+                name="cards-heart"
+                style={styles.favorite}
+              />
+            ) : (
+              <MaterialCommunityIcons
+                size={20}
+                name="cards-heart-outline"
+                style={styles.favorite}
+              />
+            )}
+          </CustomTouchable>
         </View>
 
         <View style={styles.priceContainer}>
@@ -57,12 +67,13 @@ const PizzaCard: FC<Props> = memo(({ pizza }) => {
             {description}
           </Text>
 
-          <View style={styles.cart}>
-            <Image
-              source={cart}
-              style={styles.image}
+          <CustomTouchable>
+            <MaterialCommunityIcons
+              size={20}
+              name="cart"
+              style={styles.cart}
             />
-          </View>
+          </CustomTouchable>
         </View>
       </View>
     </View>
@@ -72,9 +83,9 @@ const PizzaCard: FC<Props> = memo(({ pizza }) => {
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
-    backgroundColor: '#fff',
+    backgroundColor: colors.common.white,
     padding: 10,
-    shadowColor: '#000',
+    shadowColor: colors.common.black,
     shadowOffset: {
       width: 0,
       height: 2,
@@ -104,11 +115,11 @@ const styles = StyleSheet.create({
     height: 36,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#5CC874',
+    backgroundColor: colors.green.light,
   },
   promoText: {
     fontWeight: 'bold',
-    color: '#fff',
+    color: colors.common.white,
     fontSize: 12,
   },
   content: {
@@ -122,11 +133,10 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 16,
     fontWeight: '500',
-    color: '#121212',
+    color: colors.common.black,
   },
-  favoriteBtn: {
-    height: 20,
-    width: 20,
+  favorite: {
+    color: colors.red.main,
   },
   priceContainer: {
     flexDirection: 'row',
@@ -136,14 +146,14 @@ const styles = StyleSheet.create({
   currentPrice: {
     fontWeight: '700',
     fontSize: 18,
-    color: '#00AD3B',
+    color: colors.green.main,
     marginRight: 10,
   },
   oldPrice: {
     textDecorationLine: 'line-through',
     fontWeight: '500',
     fontSize: 18,
-    color: '#C9333A',
+    color: colors.red.main,
   },
   footerContainer: {
     flexDirection: 'row',
@@ -153,8 +163,7 @@ const styles = StyleSheet.create({
   },
   cart: {
     marginLeft: 12,
-    width: 16,
-    height: 16,
+    color: colors.orange.dark,
   },
 });
 
