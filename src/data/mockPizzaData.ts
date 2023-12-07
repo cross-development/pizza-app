@@ -1,7 +1,7 @@
 // Types
 import { IPizza } from '../types/pizza';
 
-const mockPizzaData: IPizza[] = [
+export const mockPizzaList: IPizza[] = [
   {
     id: 1,
     title: 'Margherita',
@@ -176,16 +176,15 @@ const mockPizzaData: IPizza[] = [
     currentPrice: 10,
     oldPrice: 15,
   },
-  {
-    id: 17,
-    title: 'Mediterranean Magic',
-    description: 'Culinary journey - feta, olives, artichoke hearts, and sun-dried tomatoes on golden crust.',
-    imageUrl: 'https://img.postershop.me/6419/Products/3120177_1655902691.6882_original.png',
-    isNew: false,
-    isFavorite: false,
-    currentPrice: 20,
-    oldPrice: 0,
-  },
 ];
 
-export default mockPizzaData;
+export const mockNewPizzaItem: IPizza = {
+  id: 17,
+  title: 'Mediterranean Magic',
+  description: 'Culinary journey - feta, olives, artichoke hearts, and sun-dried tomatoes on golden crust.',
+  imageUrl: 'https://img.postershop.me/6419/Products/3120177_1655902691.6882_original.png',
+  isNew: false,
+  isFavorite: false,
+  currentPrice: 20,
+  oldPrice: 0,
+};

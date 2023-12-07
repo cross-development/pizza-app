@@ -1,7 +1,7 @@
 // Types
-import { IAdvertisement } from '../types/advertisement';
+import { ISale } from '../types/sale';
 
-const mockAdvertisementData: IAdvertisement[] = [
+const mockAdvertisementData: ISale[] = [
   {
     id: 1,
     title: 'Pizza Night',

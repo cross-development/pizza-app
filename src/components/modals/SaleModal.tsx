@@ -4,7 +4,6 @@ import {
   Modal,
   StyleSheet,
   View,
-  Text,
   TouchableOpacity,
   FlatList,
   Image,
@@ -16,19 +15,20 @@ import {
   Alert,
 } from 'react-native';
 // Components
-import CustomTouchable from './CustomTouchable';
+import CustomTouchable from '../ui/CustomTouchable';
 // Theme
 import { colors } from '../../theme/palette';
-import mockAdvertisementData from '../../data/mockAdvertisementData';
+// Data
+import mockAdvertisementData from '../../data/mockSaleData';
 
 interface Props {
   isModalVisible: boolean;
   onToggleIsModalVisible: () => void;
 }
 
-const { width, height } = Dimensions.get('screen');
+const { width } = Dimensions.get('screen');
 
-const BottomModal: FC<Props> = memo(({ isModalVisible, onToggleIsModalVisible }) => {
+const SaleModal: FC<Props> = memo(({ isModalVisible, onToggleIsModalVisible }) => {
   const [currentSlideIdx, setCurrentSlideIdx] = useState(0);
 
   const handleScroll = ({ nativeEvent }: NativeSyntheticEvent<NativeScrollEvent>) => {
@@ -161,12 +161,11 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   slideImage: {
-    width: '100%',
     height: '100%',
     borderRadius: 18,
   },
 });
 
-BottomModal.displayName = 'CustomModal';
+SaleModal.displayName = 'SaleModal';
 
-export default BottomModal;
+export default SaleModal;
