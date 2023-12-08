@@ -1,13 +1,13 @@
 // Packages
 import { FC, ReactNode, memo } from 'react';
 import {
-  TouchableWithoutFeedback,
   Pressable,
   GestureResponderEvent,
   StyleProp,
   ViewStyle,
   Platform,
   StyleSheet,
+  TouchableOpacity,
 } from 'react-native';
 // Theme
 import { colors } from '../../theme/palette';
@@ -21,12 +21,13 @@ interface Props {
 
 const CustomTouchable: FC<Props> = memo(({ withoutFeedback, children, style, onPress }) =>
   withoutFeedback ? (
-    <TouchableWithoutFeedback
+    <TouchableOpacity
+      activeOpacity={1}
       onPress={onPress}
       style={[styles.common, style]}
     >
       {children}
-    </TouchableWithoutFeedback>
+    </TouchableOpacity>
   ) : (
     <Pressable
       android_ripple={{ color: colors.grey.light, radius: -5, borderless: false, foreground: false }}

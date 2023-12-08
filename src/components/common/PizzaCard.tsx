@@ -1,6 +1,7 @@
 // Packages
 import { FC, memo } from 'react';
 import { View, StyleSheet, Image, Text } from 'react-native';
+import FontAwesome5Icons from '@expo/vector-icons/FontAwesome5';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 // Components
 import CustomTouchable from '../ui/CustomTouchable';
@@ -68,9 +69,9 @@ const PizzaCard: FC<Props> = memo(({ pizza }) => {
           </Text>
 
           <CustomTouchable>
-            <MaterialCommunityIcons
+            <FontAwesome5Icons
               size={20}
-              name="cart"
+              name="shopping-bag"
               style={styles.cart}
             />
           </CustomTouchable>
