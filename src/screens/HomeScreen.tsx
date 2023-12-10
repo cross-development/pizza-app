@@ -87,4 +87,6 @@ const styles = StyleSheet.create({
   },
 });
 
+HomeScreen.displayName = 'HomeScreen';
+
 export default HomeScreen;
