@@ -4,12 +4,14 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 // Screens
 import HomeScreen from '../screens/HomeScreen';
 import PizzaScreen from '../screens/PizzaScreen';
-import WishListScreen from '../screens/WishListScreen';
+import SaleScreen from '../screens/SaleScreen';
 import SettingsScreen from '../screens/SettingsScreen';
 // Navigation
 import { Routes } from './routes';
+// Types
+import { TStackNavigationProps } from '../types/navigation';
 
-const Stack = createNativeStackNavigator();
+const Stack = createNativeStackNavigator<TStackNavigationProps>();
 
 export const HomeStack: FC = () => (
   <Stack.Navigator>
@@ -24,8 +26,9 @@ export const HomeStack: FC = () => (
     />
 
     <Stack.Screen
-      name={Routes.WishList}
-      component={WishListScreen}
+      name={Routes.Sale}
+      component={SaleScreen}
+      options={{ presentation: 'modal' }}
     />
   </Stack.Navigator>
 );

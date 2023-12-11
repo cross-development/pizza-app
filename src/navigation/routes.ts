@@ -1,8 +1,8 @@
 export enum Routes {
   Home = 'Home',
-  PizzaList = 'PizzList',
+  PizzaList = 'PizzaList',
   Pizza = 'Pizza',
-  WishList = 'WishList',
+  Sale = 'Sale',
   Settings = 'Settings',
   Profile = 'Profile',
 }

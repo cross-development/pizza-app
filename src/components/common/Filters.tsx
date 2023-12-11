@@ -1,24 +1,33 @@
 // Packages
-import { Dispatch, FC, SetStateAction, memo } from 'react';
+import { Dispatch, FC, SetStateAction, memo, useCallback } from 'react';
 import { View, StyleSheet, TextInput } from 'react-native';
+import { useNavigation, NavigationProp } from '@react-navigation/native';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 // Components
 import CustomTouchable from '../ui/CustomTouchable';
+// Navigation
+import { Routes } from '../../navigation/routes';
 // Theme
 import { colors } from '../../theme/palette';
+// Types
+import { TStackNavigationProps } from '../../types/navigation';
 
-interface Props {
+type Props = {
   filterText: string;
   isFilterVisible: boolean;
   onChangeFilterText: Dispatch<SetStateAction<string>>;
-  onToggleIsModalVisible: () => void;
   onToggleIsFilterVisible: () => void;
-}
+};
 
 const Filters: FC<Props> = memo(props => {
-  const { filterText, isFilterVisible, onChangeFilterText, onToggleIsModalVisible, onToggleIsFilterVisible } =
-    props;
+  const { filterText, isFilterVisible, onChangeFilterText, onToggleIsFilterVisible } = props;
+
+  const navigation = useNavigation<NavigationProp<TStackNavigationProps, Routes.Sale>>();
+
+  const handleNavigateToSaleScreen = useCallback(() => {
+    navigation.navigate(Routes.Sale);
+  }, []);
 
   return (
     <View style={styles.container}>
@@ -34,7 +43,7 @@ const Filters: FC<Props> = memo(props => {
       )}
 
       <View style={styles.controlContainer}>
-        <CustomTouchable onPress={onToggleIsModalVisible}>
+        <CustomTouchable onPress={handleNavigateToSaleScreen}>
           <MaterialCommunityIcons
             size={42}
             name="cards-heart"

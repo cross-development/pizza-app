@@ -1,25 +1,28 @@
 // Packages
 import { FC, useCallback, useMemo, useState } from 'react';
 import { View, StyleSheet, FlatList, SafeAreaView } from 'react-native';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
 // Components
 import Filters from '../components/common/Filters';
 import PizzaCard from '../components/common/PizzaCard';
-import SaleModal from '../components/modals/SaleModal';
-// Types
-import { IPizza } from '../types/pizza';
+// Navigation
+import { Routes } from '../navigation/routes';
 // Data
 import { mockNewPizzaItem, mockPizzaList } from '../data/mockPizzaData';
+// Types
+import { IPizza } from '../types/pizza';
+import { TStackNavigationProps } from '../types/navigation';
 
-const HomeScreen: FC = () => {
+type Props = NativeStackScreenProps<TStackNavigationProps, Routes.PizzaList>;
+
+const HomeScreen: FC<Props> = () => {
   const [filterText, setFilterText] = useState('');
-  const [pizzaList, setPizzaList] = useState<IPizza[]>(mockPizzaList.slice(0, 10));
   const [isRefreshing, setIsRefreshing] = useState(false);
-  const [isModalVisible, setIsModalVisible] = useState(false);
   const [isFilterVisible, setIsFilterVisible] = useState(false);
+  const [pizzaList, setPizzaList] = useState<IPizza[]>(mockPizzaList.slice(0, 10));
 
-  const handleToggleIsModalVisible = useCallback(() => {
-    setIsModalVisible(prevState => !prevState);
-  }, [setIsModalVisible]);
+  const navigation = useNavigation<NavigationProp<TStackNavigationProps, Routes.Pizza>>();
 
   const handleToggleIsFilterVisible = useCallback(() => {
     setIsFilterVisible(prevState => !prevState);
@@ -42,6 +45,10 @@ const HomeScreen: FC = () => {
     }, 2000);
   }, []);
 
+  const handleSelectItem = useCallback((item: IPizza) => {
+    navigation.navigate(Routes.Pizza, item);
+  }, []);
+
   const filteredProducts = useMemo(
     () => pizzaList.filter(({ title }) => title.toLowerCase().includes(filterText.toLowerCase())),
     [filterText, pizzaList.length],
@@ -53,7 +60,6 @@ const HomeScreen: FC = () => {
         filterText={filterText}
         isFilterVisible={isFilterVisible}
         onChangeFilterText={setFilterText}
-        onToggleIsModalVisible={handleToggleIsModalVisible}
         onToggleIsFilterVisible={handleToggleIsFilterVisible}
       />
 
@@ -63,17 +69,17 @@ const HomeScreen: FC = () => {
           refreshing={isRefreshing}
           onEndReachedThreshold={0.2}
           keyExtractor={item => `${item.id}`}
-          renderItem={({ item }) => <PizzaCard pizza={item} />}
+          renderItem={({ item }) => (
+            <PizzaCard
+              pizza={item}
+              onSelectItem={() => handleSelectItem(item)}
+            />
+          )}
           contentContainerStyle={styles.listContentContainer}
           onRefresh={handleRefresh}
           onEndReached={handleLoadMore}
         />
       </SafeAreaView>
-
-      <SaleModal
-        isModalVisible={isModalVisible}
-        onToggleIsModalVisible={handleToggleIsModalVisible}
-      />
     </View>
   );
 };

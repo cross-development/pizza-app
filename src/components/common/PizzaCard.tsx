@@ -10,15 +10,19 @@ import { colors } from '../../theme/palette';
 // Types
 import { IPizza } from '../../types/pizza';
 
-interface Props {
+type Props = {
   pizza: IPizza;
-}
+  onSelectItem: () => void;
+};
 
-const PizzaCard: FC<Props> = memo(({ pizza }) => {
+const PizzaCard: FC<Props> = memo(({ pizza, onSelectItem }) => {
   const { title, description, imageUrl, currentPrice, oldPrice, isFavorite, isNew } = pizza;
 
   return (
-    <View style={styles.container}>
+    <CustomTouchable
+      style={styles.container}
+      onPress={onSelectItem}
+    >
       <View style={styles.imageContainer}>
         <Image
           source={{ uri: imageUrl }}
@@ -77,7 +81,7 @@ const PizzaCard: FC<Props> = memo(({ pizza }) => {
           </CustomTouchable>
         </View>
       </View>
-    </View>
+    </CustomTouchable>
   );
 });
 
