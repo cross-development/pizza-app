@@ -25,7 +25,7 @@ export const colors = {
   },
   red: {
     main: '#C9333A',
-    light: '#FF374F',
+    light: '#FF6161',
     dark: '#9B0003',
   },
 } as const;

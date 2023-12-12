@@ -18,8 +18,8 @@ const NavigationContent: FC = () => (
       options={{
         tabBarIcon: ({ focused }) => (
           <Ionicons
-            name="pizza-outline"
             size={24}
+            name="pizza-outline"
             color={focused ? colors.blue.main : colors.grey.dark}
           />
         ),
@@ -32,8 +32,8 @@ const NavigationContent: FC = () => (
       options={{
         tabBarIcon: ({ focused }) => (
           <Ionicons
-            name="settings-outline"
             size={24}
+            name="settings-outline"
             color={focused ? colors.blue.main : colors.grey.dark}
           />
         ),

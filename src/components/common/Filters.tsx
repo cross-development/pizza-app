@@ -23,10 +23,10 @@ type Props = {
 const Filters: FC<Props> = memo(props => {
   const { filterText, isFilterVisible, onChangeFilterText, onToggleIsFilterVisible } = props;
 
-  const navigation = useNavigation<NavigationProp<TStackNavigationProps, Routes.Sale>>();
+  const navigation = useNavigation<NavigationProp<TStackNavigationProps, Routes.Promotions>>();
 
-  const handleNavigateToSaleScreen = useCallback(() => {
-    navigation.navigate(Routes.Sale);
+  const handleNavigateToPromotionsScreen = useCallback((): void => {
+    navigation.navigate(Routes.Promotions);
   }, []);
 
   return (
@@ -43,7 +43,7 @@ const Filters: FC<Props> = memo(props => {
       )}
 
       <View style={styles.controlContainer}>
-        <CustomTouchable onPress={handleNavigateToSaleScreen}>
+        <CustomTouchable onPress={handleNavigateToPromotionsScreen}>
           <MaterialCommunityIcons
             size={42}
             name="cards-heart"

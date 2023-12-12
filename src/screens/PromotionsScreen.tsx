@@ -26,12 +26,12 @@ import { TStackNavigationProps } from '../types/navigation';
 
 const { width } = Dimensions.get('screen');
 
-type Props = NativeStackScreenProps<TStackNavigationProps, Routes.Sale>;
+type Props = NativeStackScreenProps<TStackNavigationProps, Routes.Promotions>;
 
-const SaleScreen: FC<Props> = () => {
+const PromotionsScreen: FC<Props> = () => {
   const [currentSlideIdx, setCurrentSlideIdx] = useState(0);
 
-  const handleScroll = ({ nativeEvent }: NativeSyntheticEvent<NativeScrollEvent>) => {
+  const handleScroll = ({ nativeEvent }: NativeSyntheticEvent<NativeScrollEvent>): void => {
     const currentIdx = Math.round(nativeEvent.contentOffset.x / nativeEvent.layoutMeasurement.width);
 
     setCurrentSlideIdx(currentIdx);
@@ -122,6 +122,6 @@ const styles = StyleSheet.create({
   },
 });
 
-SaleScreen.displayName = 'SaleScreen';
+PromotionsScreen.displayName = 'PromotionsScreen';
 
-export default SaleScreen;
+export default PromotionsScreen;

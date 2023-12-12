@@ -13,6 +13,7 @@ import { mockNewPizzaItem, mockPizzaList } from '../data/mockPizzaData';
 // Types
 import { IPizza } from '../types/pizza';
 import { TStackNavigationProps } from '../types/navigation';
+import NoData from '../components/common/NoData';
 
 type Props = NativeStackScreenProps<TStackNavigationProps, Routes.PizzaList>;
 
@@ -24,11 +25,11 @@ const HomeScreen: FC<Props> = () => {
 
   const navigation = useNavigation<NavigationProp<TStackNavigationProps, Routes.Pizza>>();
 
-  const handleToggleIsFilterVisible = useCallback(() => {
+  const handleToggleIsFilterVisible = useCallback((): void => {
     setIsFilterVisible(prevState => !prevState);
   }, [setIsFilterVisible]);
 
-  const handleLoadMore = useCallback(() => {
+  const handleLoadMore = useCallback((): void => {
     if (pizzaList.length !== mockPizzaList.length) {
       setTimeout(() => {
         setPizzaList(prevState => [...prevState, ...mockPizzaList.slice(10)]);
@@ -36,7 +37,7 @@ const HomeScreen: FC<Props> = () => {
     }
   }, [pizzaList.length]);
 
-  const handleRefresh = useCallback(() => {
+  const handleRefresh = useCallback((): void => {
     setIsRefreshing(true);
 
     setTimeout(() => {
@@ -45,12 +46,12 @@ const HomeScreen: FC<Props> = () => {
     }, 2000);
   }, []);
 
-  const handleSelectItem = useCallback((item: IPizza) => {
+  const handleSelectItem = (item: IPizza): void => {
     navigation.navigate(Routes.Pizza, item);
-  }, []);
+  };
 
   const filteredProducts = useMemo(
-    () => pizzaList.filter(({ title }) => title.toLowerCase().includes(filterText.toLowerCase())),
+    (): IPizza[] => pizzaList.filter(({ title }) => title.toLowerCase().includes(filterText.toLowerCase())),
     [filterText, pizzaList.length],
   );
 
@@ -69,6 +70,7 @@ const HomeScreen: FC<Props> = () => {
           refreshing={isRefreshing}
           onEndReachedThreshold={0.2}
           keyExtractor={item => `${item.id}`}
+          ListEmptyComponent={NoData}
           renderItem={({ item }) => (
             <PizzaCard
               pizza={item}

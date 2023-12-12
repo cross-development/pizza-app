@@ -2,7 +2,7 @@ export enum Routes {
   Home = 'Home',
   PizzaList = 'PizzaList',
   Pizza = 'Pizza',
-  Sale = 'Sale',
+  Promotions = 'Promotions',
   Settings = 'Settings',
   Profile = 'Profile',
 }
