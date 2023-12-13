@@ -12,12 +12,12 @@ import {
 // Theme
 import { colors } from '../../theme/palette';
 
-interface Props {
+type Props = {
   withoutFeedback?: boolean;
   children: ReactNode;
   style?: StyleProp<ViewStyle>;
   onPress?: (event: GestureResponderEvent) => void;
-}
+};
 
 const CustomTouchable: FC<Props> = memo(({ withoutFeedback, children, style, onPress }) =>
   withoutFeedback ? (
