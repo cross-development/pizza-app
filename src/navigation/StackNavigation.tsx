@@ -6,6 +6,8 @@ import HomeScreen from '../screens/HomeScreen';
 import PizzaScreen from '../screens/PizzaScreen';
 import PromotionsScreen from '../screens/PromotionsScreen';
 import SettingsScreen from '../screens/SettingsScreen';
+import BasketScreen from '../screens/BasketScreen';
+import CheckoutScreen from '../screens/CheckoutScreen';
 // Navigation
 import { Routes } from './routes';
 // Types
@@ -44,6 +46,22 @@ export const SettingsStack: FC = () => (
       name={Routes.Profile}
       component={SettingsScreen}
       options={{ title: 'Settings' }}
+    />
+  </Stack.Navigator>
+);
+
+export const BasketStack: FC = () => (
+  <Stack.Navigator>
+    <Stack.Screen
+      name={Routes.Cart}
+      component={BasketScreen}
+      options={{ title: 'Basket' }}
+    />
+
+    <Stack.Screen
+      name={Routes.Checkout}
+      component={CheckoutScreen}
+      options={{ headerBackVisible: false }}
     />
   </Stack.Navigator>
 );

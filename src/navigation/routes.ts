@@ -5,4 +5,7 @@ export enum Routes {
   Promotions = 'Promotions',
   Settings = 'Settings',
   Profile = 'Profile',
+  Basket = 'Basket',
+  Cart = 'Cart',
+  Checkout = 'Checkout',
 }

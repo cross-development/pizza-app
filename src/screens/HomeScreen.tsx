@@ -4,16 +4,18 @@ import { View, StyleSheet, FlatList, SafeAreaView } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 // Components
+import NoData from '../components/common/NoData';
 import Filters from '../components/common/Filters';
 import PizzaCard from '../components/common/PizzaCard';
 // Navigation
 import { Routes } from '../navigation/routes';
+// Stores
+import { useStore } from '../stores/store';
 // Data
 import { mockNewPizzaItem, mockPizzaList } from '../data/mockPizzaData';
 // Types
 import { IPizza } from '../types/pizza';
 import { TStackNavigationProps } from '../types/navigation';
-import NoData from '../components/common/NoData';
 
 type Props = NativeStackScreenProps<TStackNavigationProps, Routes.PizzaList>;
 
@@ -24,6 +26,8 @@ const HomeScreen: FC<Props> = () => {
   const [pizzaList, setPizzaList] = useState<IPizza[]>(mockPizzaList.slice(0, 10));
 
   const navigation = useNavigation<NavigationProp<TStackNavigationProps, Routes.Pizza>>();
+
+  const { orderStore } = useStore();
 
   const handleToggleIsFilterVisible = useCallback((): void => {
     setIsFilterVisible(prevState => !prevState);
@@ -50,6 +54,10 @@ const HomeScreen: FC<Props> = () => {
     navigation.navigate(Routes.Pizza, item);
   };
 
+  const handleAddToBasket = (item: IPizza): void => {
+    orderStore.addProductToBasket(item);
+  };
+
   const filteredProducts = useMemo(
     (): IPizza[] => pizzaList.filter(({ title }) => title.toLowerCase().includes(filterText.toLowerCase())),
     [filterText, pizzaList.length],
@@ -70,11 +78,18 @@ const HomeScreen: FC<Props> = () => {
           refreshing={isRefreshing}
           onEndReachedThreshold={0.2}
           keyExtractor={item => `${item.id}`}
-          ListEmptyComponent={NoData}
+          ListEmptyComponent={
+            <NoData
+              icon="search"
+              title="Item not found"
+              description="Try searching the item with a different keyword."
+            />
+          }
           renderItem={({ item }) => (
             <PizzaCard
               pizza={item}
               onSelectItem={() => handleSelectItem(item)}
+              onAddToBasket={() => handleAddToBasket(item)}
             />
           )}
           contentContainerStyle={styles.listContentContainer}

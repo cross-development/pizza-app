@@ -13,9 +13,10 @@ import { IPizza } from '../../types/pizza';
 type Props = {
   pizza: IPizza;
   onSelectItem: () => void;
+  onAddToBasket: () => void;
 };
 
-const PizzaCard: FC<Props> = memo(({ pizza, onSelectItem }) => {
+const PizzaCard: FC<Props> = memo(({ pizza, onSelectItem, onAddToBasket }) => {
   const { title, description, imageUrl, currentPrice, oldPrice, isFavorite, isNew } = pizza;
 
   return (
@@ -72,7 +73,7 @@ const PizzaCard: FC<Props> = memo(({ pizza, onSelectItem }) => {
             {description}
           </Text>
 
-          <CustomTouchable>
+          <CustomTouchable onPress={onAddToBasket}>
             <FontAwesome5Icons
               size={20}
               name="shopping-bag"
