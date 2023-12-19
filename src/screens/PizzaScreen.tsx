@@ -1,5 +1,5 @@
 // Packages
-import { FC } from 'react';
+import { FC, useCallback } from 'react';
 import { Text, View, StyleSheet, Image } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import FontAwesome5Icons from '@expo/vector-icons/FontAwesome5';
@@ -8,6 +8,8 @@ import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import CustomTouchable from '../components/ui/CustomTouchable';
 // Navigation
 import { Routes } from '../navigation/routes';
+// Stores
+import { useStore } from '../stores/store';
 // Theme
 import { colors } from '../theme/palette';
 // Types
@@ -17,6 +19,12 @@ type Props = NativeStackScreenProps<TStackNavigationProps, Routes.Pizza>;
 
 const PizzaScreen: FC<Props> = ({ route }) => {
   const { title, description, currentPrice, imageUrl, isFavorite, isNew, oldPrice } = route.params;
+
+  const { orderStore } = useStore();
+
+  const handleAddProductToBasket = useCallback((): void => {
+    orderStore.addProductToBasket(route.params);
+  }, [route.params]);
 
   return (
     <View style={styles.container}>
@@ -56,7 +64,10 @@ const PizzaScreen: FC<Props> = ({ route }) => {
         </View>
 
         <View style={styles.controlsContainer}>
-          <CustomTouchable style={styles.button}>
+          <CustomTouchable
+            style={styles.button}
+            onPress={handleAddProductToBasket}
+          >
             <FontAwesome5Icons
               size={30}
               name="shopping-bag"

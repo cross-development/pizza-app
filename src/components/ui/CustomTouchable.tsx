@@ -16,13 +16,15 @@ type Props = {
   withoutFeedback?: boolean;
   children: ReactNode;
   style?: StyleProp<ViewStyle>;
+  disabled?: boolean;
   onPress?: (event: GestureResponderEvent) => void;
 };
 
-const CustomTouchable: FC<Props> = memo(({ withoutFeedback, children, style, onPress }) =>
+const CustomTouchable: FC<Props> = memo(({ withoutFeedback, children, style, disabled, onPress }) =>
   withoutFeedback ? (
     <TouchableOpacity
       activeOpacity={1}
+      disabled={disabled}
       onPress={onPress}
       style={[styles.common, style]}
     >
@@ -31,6 +33,7 @@ const CustomTouchable: FC<Props> = memo(({ withoutFeedback, children, style, onP
   ) : (
     <Pressable
       android_ripple={{ color: colors.grey.light, radius: -5, borderless: false, foreground: false }}
+      disabled={disabled}
       onPress={onPress}
       style={({ pressed }) => [Platform.OS === 'ios' && { opacity: pressed ? 0.8 : 1 }, styles.common, style]}
     >
