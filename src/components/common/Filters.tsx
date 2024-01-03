@@ -2,6 +2,7 @@
 import { Dispatch, FC, SetStateAction, memo, useCallback } from 'react';
 import { View, StyleSheet, TextInput } from 'react-native';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
+import Animated, { BounceIn, BounceOut } from 'react-native-reanimated';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 // Components
@@ -18,10 +19,12 @@ type Props = {
   isFilterVisible: boolean;
   onChangeFilterText: Dispatch<SetStateAction<string>>;
   onToggleIsFilterVisible: () => void;
+  animatedContainerStyle: Record<string, unknown>;
 };
 
 const Filters: FC<Props> = memo(props => {
-  const { filterText, isFilterVisible, onChangeFilterText, onToggleIsFilterVisible } = props;
+  const { filterText, isFilterVisible, animatedContainerStyle, onChangeFilterText, onToggleIsFilterVisible } =
+    props;
 
   const navigation = useNavigation<NavigationProp<TStackNavigationProps, Routes.Promotions>>();
 
@@ -30,16 +33,22 @@ const Filters: FC<Props> = memo(props => {
   }, []);
 
   return (
-    <View style={styles.container}>
+    <Animated.View style={[styles.container, animatedContainerStyle]}>
       {isFilterVisible && (
-        <TextInput
-          autoFocus
-          value={filterText}
-          placeholder="Search"
-          clearButtonMode="while-editing"
-          style={styles.searchInput}
-          onChangeText={onChangeFilterText}
-        />
+        <Animated.View
+          entering={BounceIn}
+          exiting={BounceOut}
+          style={styles.searchInputContainer}
+        >
+          <TextInput
+            autoFocus
+            value={filterText}
+            placeholder="Search"
+            clearButtonMode="while-editing"
+            style={styles.searchInput}
+            onChangeText={onChangeFilterText}
+          />
+        </Animated.View>
       )}
 
       <View style={styles.controlContainer}>
@@ -59,7 +68,7 @@ const Filters: FC<Props> = memo(props => {
           />
         </CustomTouchable>
       </View>
-    </View>
+    </Animated.View>
   );
 });
 
@@ -76,6 +85,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     marginLeft: 10,
   },
+  searchInputContainer: {
+    flexGrow: 1,
+  },
   searchInput: {
     height: 40,
     borderWidth: 1,
@@ -83,7 +95,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     borderRadius: 18,
     borderColor: colors.grey.dark,
-    flexGrow: 1,
   },
   favoriteBtn: {
     color: colors.red.main,

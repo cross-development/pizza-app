@@ -1,8 +1,15 @@
 // Packages
 import { FC, useCallback, useMemo, useState } from 'react';
-import { View, StyleSheet, FlatList, SafeAreaView } from 'react-native';
+import { View, StyleSheet, SafeAreaView } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
+import Animated, {
+  Extrapolate,
+  interpolate,
+  useSharedValue,
+  useAnimatedStyle,
+  useAnimatedScrollHandler,
+} from 'react-native-reanimated';
 // Components
 import NoData from '../components/common/NoData';
 import Filters from '../components/common/Filters';
@@ -26,6 +33,18 @@ const HomeScreen: FC<Props> = () => {
   const [pizzaList, setPizzaList] = useState<IPizza[]>(mockPizzaList.slice(0, 10));
 
   const navigation = useNavigation<NavigationProp<TStackNavigationProps, Routes.Pizza>>();
+
+  const scrollY = useSharedValue(0);
+
+  const handleScroll = useAnimatedScrollHandler(event => {
+    scrollY.value = event.contentOffset.y;
+  });
+
+  const animatedFiltersStyle = useAnimatedStyle(() => ({
+    opacity: interpolate(scrollY.value, [0, 65], [1, 0], Extrapolate.CLAMP),
+    height: interpolate(scrollY.value, [0, 35, 65], [65, 65, 0], Extrapolate.CLAMP),
+    transform: [{ translateY: interpolate(scrollY.value, [0, 65], [0, -65], Extrapolate.CLAMP) }],
+  }));
 
   const { orderStore } = useStore();
 
@@ -68,12 +87,13 @@ const HomeScreen: FC<Props> = () => {
       <Filters
         filterText={filterText}
         isFilterVisible={isFilterVisible}
+        animatedContainerStyle={animatedFiltersStyle}
         onChangeFilterText={setFilterText}
         onToggleIsFilterVisible={handleToggleIsFilterVisible}
       />
 
       <SafeAreaView style={styles.container}>
-        <FlatList
+        <Animated.FlatList
           data={filteredProducts}
           refreshing={isRefreshing}
           onEndReachedThreshold={0.2}
@@ -93,6 +113,7 @@ const HomeScreen: FC<Props> = () => {
             />
           )}
           contentContainerStyle={styles.listContentContainer}
+          onScroll={handleScroll}
           onRefresh={handleRefresh}
           onEndReached={handleLoadMore}
         />
