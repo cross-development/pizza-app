@@ -1,11 +1,13 @@
 export enum Routes {
+  Welcome = 'Welcome',
+  Main = 'Main',
   Home = 'Home',
   PizzaList = 'PizzaList',
   Pizza = 'Pizza',
   Promotions = 'Promotions',
-  Settings = 'Settings',
-  Profile = 'Profile',
+  History = 'History',
   Basket = 'Basket',
   Cart = 'Cart',
   Checkout = 'Checkout',
+  Orders = 'Orders',
 }

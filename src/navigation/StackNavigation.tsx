@@ -5,7 +5,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import HomeScreen from '../screens/HomeScreen';
 import PizzaScreen from '../screens/PizzaScreen';
 import PromotionsScreen from '../screens/PromotionsScreen';
-import SettingsScreen from '../screens/SettingsScreen';
+import HistoryScreen from '../screens/HistoryScreen';
 import BasketScreen from '../screens/BasketScreen';
 import CheckoutScreen from '../screens/CheckoutScreen';
 // Navigation
@@ -40,12 +40,12 @@ export const HomeStack: FC = () => (
   </Stack.Navigator>
 );
 
-export const SettingsStack: FC = () => (
+export const HistoryStack: FC = () => (
   <Stack.Navigator>
     <Stack.Screen
-      name={Routes.Profile}
-      component={SettingsScreen}
-      options={{ title: 'Settings' }}
+      name={Routes.Orders}
+      component={HistoryScreen}
+      options={{ title: 'Order History' }}
     />
   </Stack.Navigator>
 );

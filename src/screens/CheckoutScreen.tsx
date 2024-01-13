@@ -4,7 +4,7 @@ import { View, StyleSheet } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { NavigationProp, useNavigation, ParamListBase, useFocusEffect } from '@react-navigation/native';
 // Components
-import NoData from '../components/common/NoData';
+import DataPlaceholder from '../components/common/DataPlaceholder';
 // Routes
 import { Routes } from '../navigation/routes';
 // Types
@@ -19,7 +19,7 @@ const CheckoutScreen: FC<Props> = () => {
 
   return (
     <View style={styles.container}>
-      <NoData
+      <DataPlaceholder
         type="success"
         icon="ios-shield-checkmark"
         title="Thank you for your order!"

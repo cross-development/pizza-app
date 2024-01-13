@@ -4,10 +4,13 @@ import { Routes } from '../navigation/routes';
 import { IPizza } from './pizza';
 
 export type TStackNavigationProps = {
+  [Routes.Welcome]: undefined;
+  [Routes.Main]: undefined;
   [Routes.PizzaList]: undefined;
   [Routes.Pizza]: IPizza;
   [Routes.Promotions]: undefined;
-  [Routes.Profile]: undefined;
+  [Routes.History]: undefined;
+  [Routes.Orders]: undefined;
   [Routes.Cart]: undefined;
   [Routes.Checkout]: undefined;
 };
