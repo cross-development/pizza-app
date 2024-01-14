@@ -1,29 +1,26 @@
 // Packages
 import { FC } from 'react';
-import { Text, View, StyleSheet, FlatList, SafeAreaView } from 'react-native';
+import { View, StyleSheet, FlatList, SafeAreaView } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 // Components
 import DataPlaceholder from '../components/common/DataPlaceholder';
+import OrderHistoryCard from '../components/common/OrderHistoryCard';
 // Navigation
 import { Routes } from '../navigation/routes';
 // Hooks
 import useAsyncStorage from '../hooks/useStorage';
 // Types
-import { TOrderHistoryItem } from '../types/order';
+import { IOrderHistoryItem } from '../types/order';
 import { TStackNavigationProps } from '../types/navigation';
 
 type Props = NativeStackScreenProps<TStackNavigationProps, Routes.Orders>;
 
 const HistoryScreen: FC<Props> = () => {
-  const [orderHistory] = useAsyncStorage<TOrderHistoryItem[]>({ key: 'orderHistory', initialValue: [] });
-
-  console.log('orderHistory', orderHistory);
+  const [orderHistory] = useAsyncStorage<IOrderHistoryItem[]>({ key: 'orderHistory', initialValue: [] });
 
   return (
     <View style={styles.container}>
       <SafeAreaView style={styles.container}>
-        <Text>HistoryScreen</Text>
-
         <FlatList
           data={orderHistory}
           keyExtractor={item => `${item.id}`}
@@ -34,11 +31,7 @@ const HistoryScreen: FC<Props> = () => {
               description="Try searching the item with a different keyword."
             />
           }
-          renderItem={({ item }) => (
-            <View>
-              <Text>{item.title}</Text>
-            </View>
-          )}
+          renderItem={({ item }) => <OrderHistoryCard item={item} />}
           contentContainerStyle={styles.listContentContainer}
         />
       </SafeAreaView>
@@ -52,6 +45,7 @@ const styles = StyleSheet.create({
   },
   listContentContainer: {
     paddingHorizontal: 20,
+    paddingVertical: 20,
   },
 });
 

@@ -18,7 +18,7 @@ import { useStore } from '../stores/store';
 // Theme
 import { colors } from '../theme/palette';
 // Types
-import { TOrderHistoryItem } from '../types/order';
+import { IOrderHistoryItem } from '../types/order';
 import { TStackNavigationProps } from '../types/navigation';
 
 type Props = NativeStackScreenProps<TStackNavigationProps, Routes.Cart>;
@@ -26,7 +26,7 @@ type Props = NativeStackScreenProps<TStackNavigationProps, Routes.Cart>;
 const BasketScreen: FC<Props> = observer(() => {
   const { orderStore } = useStore();
 
-  const [, setOrderHistory] = useAsyncStorage<TOrderHistoryItem[]>({ key: 'orderHistory', initialValue: [] });
+  const [, setOrderHistory] = useAsyncStorage<IOrderHistoryItem[]>({ key: 'orderHistory', initialValue: [] });
 
   const navigation = useNavigation<NavigationProp<TStackNavigationProps, Routes.Pizza>>();
 
@@ -43,20 +43,15 @@ const BasketScreen: FC<Props> = observer(() => {
   };
 
   const handleCheckoutOrder = (): void => {
-    setOrderHistory(prevState => {
-      const id = ((Math.random() * 0xffffff) << 0).toString(16);
-
-      return [
-        {
-          id,
-          title: `Order #${id}`,
-          amount: orderStore.totalCount,
-          totalPrice: orderStore.totalPrice,
-          date: dayjs().format('DD.MM.YYYY'),
-        },
-        ...prevState,
-      ];
-    });
+    setOrderHistory(prevState => [
+      {
+        id: ((Math.random() * 0xffffff) << 0).toString(16),
+        amount: orderStore.totalCount,
+        totalPrice: orderStore.totalPrice,
+        date: dayjs().format('DD.MM.YYYY'),
+      },
+      ...prevState,
+    ]);
 
     orderStore.checkoutOrder();
 

@@ -7,9 +7,8 @@ export interface IOrderItem {
   totalPrice: number;
 }
 
-export interface TOrderHistoryItem {
+export interface IOrderHistoryItem {
   id: string;
-  title: string;
   amount: number;
   totalPrice: number;
   date: string;

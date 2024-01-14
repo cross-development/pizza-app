@@ -24,7 +24,7 @@ import { useStore } from '../stores/store';
 import { mockNewPizzaItem, mockPizzaList } from '../data/mockPizzaData';
 // Types
 import { IPizza } from '../types/pizza';
-import { TOrderHistoryItem } from '../types/order';
+import { IOrderHistoryItem } from '../types/order';
 import { TStackNavigationProps } from '../types/navigation';
 
 type Props = NativeStackScreenProps<TStackNavigationProps, Routes.PizzaList>;
@@ -39,7 +39,7 @@ const HomeScreen: FC<Props> = () => {
 
   // In order to clear async storage (for testing)
   const [, setIsGotStarted] = useAsyncStorage({ key: 'isGotStarted', initialValue: false });
-  const [, setOrderHistory] = useAsyncStorage<TOrderHistoryItem[]>({ key: 'orderHistory', initialValue: [] });
+  const [, setOrderHistory] = useAsyncStorage<IOrderHistoryItem[]>({ key: 'orderHistory', initialValue: [] });
 
   const scrollY = useSharedValue(0);
 
