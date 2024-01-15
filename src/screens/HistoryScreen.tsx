@@ -26,9 +26,9 @@ const HistoryScreen: FC<Props> = () => {
           keyExtractor={item => `${item.id}`}
           ListEmptyComponent={
             <DataPlaceholder
-              icon="search"
-              title="Item not found"
-              description="Try searching the item with a different keyword."
+              icon="clipboard-outline"
+              title="Order history is empty"
+              description=""
             />
           }
           renderItem={({ item }) => <OrderHistoryCard item={item} />}
