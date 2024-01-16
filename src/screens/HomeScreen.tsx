@@ -11,17 +11,20 @@ import Animated, {
   useAnimatedScrollHandler,
 } from 'react-native-reanimated';
 // Components
-import NoData from '../components/common/NoData';
 import Filters from '../components/common/Filters';
 import PizzaCard from '../components/common/PizzaCard';
+import DataPlaceholder from '../components/common/DataPlaceholder';
 // Navigation
 import { Routes } from '../navigation/routes';
+// Hooks
+import useAsyncStorage from '../hooks/useStorage';
 // Stores
 import { useStore } from '../stores/store';
 // Data
 import { mockNewPizzaItem, mockPizzaList } from '../data/mockPizzaData';
 // Types
 import { IPizza } from '../types/pizza';
+import { IOrderHistoryItem } from '../types/order';
 import { TStackNavigationProps } from '../types/navigation';
 
 type Props = NativeStackScreenProps<TStackNavigationProps, Routes.PizzaList>;
@@ -33,6 +36,10 @@ const HomeScreen: FC<Props> = () => {
   const [pizzaList, setPizzaList] = useState<IPizza[]>(mockPizzaList.slice(0, 10));
 
   const navigation = useNavigation<NavigationProp<TStackNavigationProps, Routes.Pizza>>();
+
+  // In order to clear async storage (for testing)
+  const [, setIsGotStarted] = useAsyncStorage({ key: 'isGotStarted', initialValue: false });
+  const [, setOrderHistory] = useAsyncStorage<IOrderHistoryItem[]>({ key: 'orderHistory', initialValue: [] });
 
   const scrollY = useSharedValue(0);
 
@@ -50,7 +57,13 @@ const HomeScreen: FC<Props> = () => {
 
   const handleToggleIsFilterVisible = useCallback((): void => {
     setIsFilterVisible(prevState => !prevState);
-  }, [setIsFilterVisible]);
+
+    // In order to clear async storage (for testing)
+    if (filterText.toLowerCase() === 'clear') {
+      setIsGotStarted(false);
+      setOrderHistory([]);
+    }
+  }, [setIsFilterVisible, filterText]);
 
   const handleLoadMore = useCallback((): void => {
     if (pizzaList.length !== mockPizzaList.length) {
@@ -99,7 +112,7 @@ const HomeScreen: FC<Props> = () => {
           onEndReachedThreshold={0.2}
           keyExtractor={item => `${item.id}`}
           ListEmptyComponent={
-            <NoData
+            <DataPlaceholder
               icon="search"
               title="Item not found"
               description="Try searching the item with a different keyword."

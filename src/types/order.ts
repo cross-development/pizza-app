@@ -6,3 +6,10 @@ export interface IOrderItem {
   quantity: number;
   totalPrice: number;
 }
+
+export interface IOrderHistoryItem {
+  id: string;
+  amount: number;
+  totalPrice: number;
+  date: string;
+}

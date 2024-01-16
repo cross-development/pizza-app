@@ -6,7 +6,7 @@ import InactiveStateBackground from './src/components/common/InactiveStateBackgr
 // Stores
 import { StoreContext, store } from './src/stores/store';
 // Navigation
-import MainNavigation from './src/navigation/MainNavigation';
+import MainStack from './src/navigation/MainStackNavigation';
 // Hooks
 import useAppState from './src/hooks/useAppState';
 
@@ -18,7 +18,7 @@ const App: FC = () => {
       <NavigationContainer>
         {appStateStatus !== 'active' && <InactiveStateBackground />}
 
-        <MainNavigation />
+        <MainStack />
       </NavigationContainer>
     </StoreContext.Provider>
   );

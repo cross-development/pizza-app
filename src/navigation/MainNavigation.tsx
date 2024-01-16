@@ -2,11 +2,12 @@
 import { FC } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from '@expo/vector-icons/Ionicons';
+import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 // Components
 import CartIconWithBadge from '../components/common/CartIconWithBadge';
 // Navigation
 import { Routes } from './routes';
-import { BasketStack, HomeStack, SettingsStack } from './StackNavigation';
+import { BasketStack, HomeStack, HistoryStack } from './StackNavigation';
 // Theme
 import { colors } from '../theme/palette';
 
@@ -18,12 +19,12 @@ const NavigationContent: FC = () => (
       name={Routes.Home}
       component={HomeStack}
       options={{
-        title: 'Menu',
+        tabBarShowLabel: false,
         tabBarIcon: ({ focused }) => (
           <Ionicons
-            size={24}
+            size={26}
             name="pizza-outline"
-            color={focused ? colors.blue.main : colors.grey.dark}
+            color={focused ? colors.red.main : colors.grey.dark}
           />
         ),
       }}
@@ -33,25 +34,27 @@ const NavigationContent: FC = () => (
       name={Routes.Basket}
       component={BasketStack}
       options={{
+        tabBarShowLabel: false,
         tabBarIcon: ({ focused }) => (
           <CartIconWithBadge
-            size={24}
+            size={26}
             name="cart-outline"
-            color={focused ? colors.blue.main : colors.grey.dark}
+            color={focused ? colors.red.main : colors.grey.dark}
           />
         ),
       }}
     />
 
     <Tab.Screen
-      name={Routes.Settings}
-      component={SettingsStack}
+      name={Routes.History}
+      component={HistoryStack}
       options={{
+        tabBarShowLabel: false,
         tabBarIcon: ({ focused }) => (
-          <Ionicons
-            size={24}
-            name="settings-outline"
-            color={focused ? colors.blue.main : colors.grey.dark}
+          <MaterialIcons
+            name="history"
+            size={26}
+            color={focused ? colors.red.main : colors.grey.dark}
           />
         ),
       }}

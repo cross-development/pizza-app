@@ -13,7 +13,7 @@ type Props = {
   containerStyle?: StyleProp<TextStyle>;
 };
 
-const NoData: FC<Props> = memo(({ title, description, icon, containerStyle, type = 'info' }) => (
+const DataPlaceholder: FC<Props> = memo(({ title, description, icon, containerStyle, type = 'info' }) => (
   <View style={[styles.container, containerStyle]}>
     {icon && (
       <Ionicons
@@ -65,6 +65,6 @@ const styles = StyleSheet.create({
   },
 });
 
-NoData.displayName = 'NoData';
+DataPlaceholder.displayName = 'DataPlaceholder';
 
-export default NoData;
+export default DataPlaceholder;
